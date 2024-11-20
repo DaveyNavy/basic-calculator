@@ -39,6 +39,7 @@ div {
     background-color: #b2b9b7;
     font-size: 5.5em;
     padding-right: 10px;
+    text-align: right;
 }
 
 .special-symbols {
@@ -62,6 +63,11 @@ button {
     border-radius: 5px;
     font-size: 2em;
     border: 2px solid black;
+    opacity: 100%;
+}
+
+button:active {
+    opacity: 70%;
 }
 
 .special-symbols button {

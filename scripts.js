@@ -57,13 +57,14 @@ function resetAll() {
 const operandsList = Array.from(document.querySelectorAll(".operands > div > button"));
 operandsList.forEach((element) => {
     element.addEventListener("click", () => {
-        let currentDisplay = displayElement.textContent;
+        let currentDisplay = displayElement.value;
         if (currentDisplay == '0' && element.textContent == 0) return;
+        if (currentDisplay.includes('.') && element.textContent == '.') return;
         if (beginNewDisplay || currentDisplay == 'ERROR') {
             currentDisplay = '';
             beginNewDisplay = false;
         }
-        displayElement.textContent = (currentDisplay + element.textContent).slice(0,8);
+        displayElement.value = (currentDisplay + element.textContent).slice(0,8);
     })
 })
 
@@ -71,14 +72,14 @@ const operatorList = Array.from(document.querySelectorAll(".operators > button")
 operatorList.splice(4,1);
 operatorList.forEach((element) => {
     element.addEventListener("click", () => {
-        if (displayElement.textContent == "ERROR") return;
+        if (displayElement.value == "ERROR") return;
         if (!firstOperand) {
-            firstOperand = displayElement.textContent;
+            firstOperand = displayElement.value;
         } 
         else {
-            secondOperand = displayElement.textContent;
+            secondOperand = displayElement.value;
             let result = operate(firstOperand, operator, secondOperand);
-            displayElement.textContent = result;
+            displayElement.value = result;
 
             firstOperand = result;
             secondOperand = null;
@@ -92,9 +93,9 @@ const equalElement = document.querySelector(".equal");
 equalElement.addEventListener("click", () => {
     if (!operator) return;
 
-    secondOperand = displayElement.textContent;
+    secondOperand = displayElement.value;
     let result = operate(firstOperand, operator, secondOperand)
-    displayElement.textContent = result;
+    displayElement.value = result;
 
     resetAll();
 })
@@ -102,17 +103,17 @@ equalElement.addEventListener("click", () => {
 const clearElement = document.querySelector(".calculator-clear");
 clearElement.addEventListener("click", () => {
     resetAll();
-    displayElement.textContent = '0';
+    displayElement.value = '0';
 })
 
 const signElement = document.querySelector(".calculator-sign");
 signElement.addEventListener("click", () => {
-    if (displayElement.textContent == '0' || displayElement.textContent == 'ERROR') return;
-    displayElement.textContent = -displayElement.textContent;
+    if (displayElement.value == '0' || displayElement.value == 'ERROR') return;
+    displayElement.value = -displayElement.value;
 })
 
 const percentElement = document.querySelector(".calculator-percent");
 percentElement.addEventListener("click", () => {
-    if (displayElement.textContent == "ERROR") return;
-    displayElement.textContent = divide(displayElement.textContent, 100);
+    if (displayElement.value == "ERROR") return;
+    displayElement.value = divide(displayElement.value, 100);
 })
